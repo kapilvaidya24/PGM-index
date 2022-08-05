@@ -219,8 +219,8 @@ public:
   }
 
 
-  double get_pos(const K &key)
-  {
+  double get_pos(const K &key)const{
+  
     auto k = std::max(first_key, key);
     auto it = segment_for_key(k);
     auto pos = (*it).get_cdf(k);
