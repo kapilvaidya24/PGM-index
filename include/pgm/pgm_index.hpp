@@ -224,6 +224,8 @@ public:
     auto k = std::max(first_key, key);
     auto it = segment_for_key(k);
     auto pos = (*it).get_cdf(k);
+    pos=std::max(pos,0.0);
+    pos=std::min(pos,(double)(n-1));
     return pos;
   }
 
