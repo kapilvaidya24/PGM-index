@@ -218,6 +218,15 @@ public:
     return {pos, lo, hi};
   }
 
+
+  double get_pos(const K &key)
+  {
+    auto k = std::max(first_key, key);
+    auto it = segment_for_key(k);
+    auto pos = (*it).get_cdf(k);
+    return pos;
+  }
+
   /**
    * Returns the number of segments in the last level of the index.
    * @return the number of segments
@@ -290,6 +299,11 @@ struct PGMIndex<K, Epsilon, EpsilonRecursive, Floating>::Segment {
   inline size_t operator()(const K &k) const {
     auto pos = int64_t(slope * (k - key)) + intercept;
     return pos > 0 ? size_t(pos) : 0ull;
+  }
+
+  inline double get_cdf(const K &k) const {
+    double pos = double(slope * (k - key)) + intercept;
+    return pos;
   }
 };
 
